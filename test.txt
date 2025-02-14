@@ -1,0 +1,24 @@
+Essayez ces config : 
+
+curseur de proba de churn defaut à 0.5 - 50%
+Gender : Female 
+Senior citizen : 0 (No)
+Tenure (Months) : 30 
+Contract : 0 (Month-to-month)
+Payment Method : 0 ( Electronic Check )
+Monthly Charges : 100$
+Total Charges : 3000$
+
+>> Proba de Churn à 53.57% au desssus du seuil donc client susceptible de quitter (churn)
+
+
+urseur de proba de churn defaut à 0.5 - 50%
+Gender : Male 
+Senior citizen : 0 (No)
+Tenure (Months) : 30 
+Contract : 0 (Month-to-month)
+Payment Method : 0 ( Electronic Check )
+Monthly Charges : 80$
+Total Charges : 2400$
+
+>> Proba de Churn à 36.30% au desssus du seuil donc client susceptible de rester (NO churn)
