@@ -1,6 +1,6 @@
 # Prédiction du Churn - Projet Complet
 
-Ce projet vise à prédire le churn des clients (érosion de la clientèle) à l'aide d'un modèle de machine learning. Il comprend :
+Ce projet vise àanalyser et prédire le churn des clients (érosion de la clientèle) à l'aide d'un modèle de machine learning. Il comprend :
 - Une application web permettant d'obtenir des prédictions en fonction des caractéristiques des clients.
 - Un tableau de bord pour visualiser les tendances et insights.
 - Un rapport fournissant des recommandations stratégiques pour réduire le churn.
@@ -32,5 +32,3 @@ La prochaine étape du projet consiste à développer :
 - Intégration d'autres facteurs influençant le churn
 - Amélioration de l'UI/UX de l'application
 
----
-📧 **Contact** : Pour toute question ou suggestion, n'hésitez pas à me contacter !
