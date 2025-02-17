@@ -12,7 +12,7 @@ L'application est déployée sur Heroku et accessible via le lien suivant :
 ## 📌 Fonctionnalités
 - **Prédiction du churn** : L'utilisateur entre les informations d'un client et obtient une prédiction sur son risque de churn.
 - **Seuil ajustable** : Possibilité de modifier le seuil de décision pour adapter la sensibilité de la prédiction.
-- **Visualisation des données** : Un tableau de bord interactif pour explorer les tendances du churn.
+- **Visualisation des données** : Un dashboard interactif pour explorer les tendances et statistiques clés sur le churn.
 - **Rapport d'analyse** : Un document synthétique présentant les principaux enseignements et recommandations.
 
 ## 🛠 Technologies Utilisées
@@ -20,12 +20,8 @@ L'application est déployée sur Heroku et accessible via le lien suivant :
 - **Streamlit** pour l'interface utilisateur
 - **Heroku** pour le déploiement
 - **Tableau de bord** (powerBI) pour l'analyse visuelle
-- **Rapport d'analyse** (canva) avec recommandations
+- **Rapport d'analyse** (canva) avec conseils stratégiques
 
-## 📊 Tableau de Bord & Rapport d'Analyse
-La prochaine étape du projet consiste à développer :
-- **Un tableau de bord** affichant des statistiques clés sur le churn (distribution, facteurs influents, etc.).
-- **Un rapport** détaillant les actions à mettre en place pour réduire le churn.
 
 ## 🚀 Améliorations Futures
 - Optimisation du modèle de prédiction
