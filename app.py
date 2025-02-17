@@ -64,7 +64,7 @@ elif menu == "Voir Dashboard":
     st.subheader("📊 Dashboard - Analyse du Churn")
 
     # Afficher le dashboard (image)
-    st.image("dashboard.png", caption="Analyse du churn", use_column_width=True)
+    st.image("dashboard.png", caption="Analyse du churn", use_container_width=True)
 
     # Bouton pour télécharger le PDF du dashboard
     with open("dashboard.pdf", "rb") as f:
