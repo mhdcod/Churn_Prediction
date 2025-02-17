@@ -7,60 +7,81 @@ logreg_model = joblib.load('logreg_model3.pkl')
 
 # Fonction de prédiction
 def predict_churn(gender, senior_citizen, tenure, contract, payment_method, 
-                  monthly_charges, total_charges, threshold=0.5):  # Default threshold = 0.3
+                  monthly_charges, total_charges, threshold=0.5):  
     
-    # Assurez-vous que l'ordre des caractéristiques corresponde à celui utilisé lors de l'entraînement
     input_data = np.array([float(gender), float(senior_citizen), float(tenure), float(contract),  
                        float(payment_method), float(monthly_charges), float(total_charges)]).reshape(1, -1)
 
-    # Obtenir la probabilité de churn
-    churn_probability = logreg_model.predict_proba(input_data)[:, 1][0]  # Probabilité de churn
-    
-    # Appliquer le seuil personnalisé
+    churn_probability = logreg_model.predict_proba(input_data)[:, 1][0]  
     churn_prediction = 1 if churn_probability >= threshold else 0
     
     return churn_prediction, churn_probability
 
+# === Interface Streamlit ===
+st.set_page_config(page_title="Churn Prediction App", layout="wide")
 
-# Interface utilisateur Streamlit
-st.title('Customer Churn Prediction')
+# Onglet de navigation
+menu = st.sidebar.radio("Navigation", ["Accueil", "Voir Dashboard", "Voir Rapport"])
 
-st.write("""
-    Cette application prédit la probabilité qu'un client quitte l'entreprise (churn) en fonction de ses détails.
-    Entrez les informations du client ci-dessous et obtenez la prédiction.
-""")
+if menu == "Accueil":
+    st.title('Customer Churn Prediction')
+    st.write("""
+        Cette application prédit la probabilité qu'un client quitte l'entreprise (churn) en fonction de ses détails.
+        Entrez les informations du client ci-dessous et obtenez la prédiction.
+    """)
 
-# Option for the user to adjust the threshold
-threshold = st.slider('Sélectionner le seuil de prédiction de churn', 0.0, 1.0, 0.5)
+    # Seuil ajustable
+    threshold = st.slider('Sélectionner le seuil de prédiction de churn', 0.0, 1.0, 0.5)
 
-# Demander à l'utilisateur de saisir toutes les caractéristiques
-gender = st.selectbox('Gender', ['Male', 'Female'])
-gender = 1 if gender == 'Female' else 0
+    # Entrées utilisateur
+    gender = st.selectbox('Gender', ['Male', 'Female'])
+    gender = 1 if gender == 'Female' else 0
 
-senior_citizen = st.selectbox('Senior Citizen (1: Yes, 0: No)', [0, 1])
+    senior_citizen = st.selectbox('Senior Citizen (1: Yes, 0: No)', [0, 1])
+    tenure = st.number_input('Tenure (Months)', min_value=1, max_value=72, value=30)
+    contract = st.selectbox('Contract (0: Month-to-month, 1: One year, 2: Two year)', [0, 1, 2])
+    payment_method = st.selectbox('Payment Method (0: Electronic check, 1: Mailed check, 2: Bank transfer, 3: Credit card)', [0, 1, 2, 3])
+    monthly_charges = st.number_input('Monthly Charges ($)', min_value=18.8, max_value=118.75, value=50.0)
+    total_charges = st.number_input('Total Charges ($)', min_value=18.8, max_value=8684.8, value=1000.0)
 
-tenure = st.number_input('Tenure (Months)', min_value=1, max_value=72, value=30)
+    # Prédiction
+    if st.button('Predict'):
+        churn, churn_probability = predict_churn(gender, senior_citizen, tenure, contract, payment_method, 
+                                                 monthly_charges, total_charges, threshold=threshold)
+        
+        st.write(f"📊 Probabilité de churn : {churn_probability:.2%}")  
+        
+        if churn == 1:
+            st.write("🔴 Le client est susceptible de quitter (churn).")
+        else:
+            st.write("🟢 Le client est susceptible de rester.")
 
-contract = st.selectbox('Contract (0: Month-to-month, 1: One year, 2: Two year)', [0, 1, 2])
+    # Afficher les coefficients du modèle
+    if st.checkbox('Afficher les coefficients du modèle'):
+        st.write(logreg_model.coef_)
 
-payment_method = st.selectbox('Payment Method (0: Electronic check, 1: Mailed check, 2: Bank transfer, 3: Credit card)', [0, 1, 2, 3])
+elif menu == "Voir Dashboard":
+    st.subheader("📊 Dashboard - Analyse du Churn")
 
-monthly_charges = st.number_input('Monthly Charges ($)', min_value=18.8, max_value=118.75, value=50.0)
+    # Afficher le dashboard (image)
+    st.image("dashboard.png", caption="Analyse du churn", use_column_width=True)
 
-total_charges = st.number_input('Total Charges ($)', min_value=18.8, max_value=8684.8, value=1000.0)
+    # Bouton pour télécharger le PDF du dashboard
+    with open("dashboard.pdf", "rb") as f:
+        st.download_button("📥 Télécharger le Dashboard (PDF)", f, file_name="dashboard.pdf", mime="application/pdf")
 
-# Prédiction lorsque l'utilisateur clique sur le bouton
-if st.button('Predict'):
-    churn, churn_probability = predict_churn(gender, senior_citizen, tenure, contract, payment_method, 
-                                             monthly_charges, total_charges, threshold=threshold)  # Apply threshold
-    
-    st.write(f"📊 Probabilité de churn : {churn_probability:.2%}")  # Show probability as percentage
-    
-    if churn == 1:
-        st.write("🔴 Le client est susceptible de quitter (churn).")
-    else:
-        st.write("🟢 Le client est susceptible de rester.")
+elif menu == "Voir Rapport":
+    st.subheader("📄 Rapport - Recommandations stratégiques")
 
-# Display model coefficients for transparency (optional)
-if st.checkbox('Afficher les coefficients du modèle'):
-    st.write(logreg_model.coef_)
+    # Afficher un résumé des recommandations
+    st.write("""
+    **Principales recommandations pour réduire le churn :**  
+    - 🔹 **Fidéliser les clients mensuels** : Offrir des réductions ou des avantages pour les encourager à passer à un abonnement annuel.  
+    - 🔹 **Améliorer l’expérience des seniors** : Mettre en place une assistance prioritaire pour cette catégorie.  
+    - 🔹 **Optimiser la facturation** : Encourager les paiements automatiques pour réduire le churn lié aux paiements manuels.  
+    - 🔹 **Analyse des tarifs** : Vérifier si les clients ayant des factures élevées ont plus tendance à partir.  
+    """)
+
+    # Bouton pour télécharger le PDF du rapport
+    with open("rapport.pdf", "rb") as f:
+        st.download_button("📥 Télécharger le Rapport (PDF)", f, file_name="rapport.pdf", mime="application/pdf")
