@@ -19,8 +19,8 @@ L'application est déployée sur Heroku et accessible via le lien suivant :
 - **Python** (scikit-learn, numpy, pandas, joblib)
 - **Streamlit** pour l'interface utilisateur
 - **Heroku** pour le déploiement
-- **Tableau de bord** (à venir) pour l'analyse visuelle
-- **Rapport d'analyse** (à venir) avec recommandations
+- **Tableau de bord** (powerBI) pour l'analyse visuelle
+- **Rapport d'analyse** (canva) avec recommandations
 
 ## 📊 Tableau de Bord & Rapport d'Analyse
 La prochaine étape du projet consiste à développer :
@@ -30,5 +30,4 @@ La prochaine étape du projet consiste à développer :
 ## 🚀 Améliorations Futures
 - Optimisation du modèle de prédiction
 - Intégration d'autres facteurs influençant le churn
-- Amélioration de l'UI/UX de l'application
 
